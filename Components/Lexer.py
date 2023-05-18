@@ -1,6 +1,8 @@
 '''
 grumPy Lexer
 
+-- CONSIDERING REMOVING --
+
 @author Efren Haskell
 efrenhask@brandeis.edu
 efrenhask@gmail.com
@@ -19,23 +21,7 @@ class Lexer:
         throw(UNIMPLIMENTED)
         return None
 
-    def tokenize(self,line:str) -> list:
-        initial = 0
-        length = len(line)
-        tokens = list()
-        token = ""
-        for index in range(length):
-            if line[i] in self.token_breaks:
-                new = Token.Token()
-                if token in self.special_tokens:
-                    new.set_type(token)
-                token = line[initial:index]
-                if token in self.special_tokens:
-                    throw(mod(SYNTAXERROR," a special token must be followed by either a  or "))
-                    break
-                
-                tokens.append()
-                initial = index+1
+    
 
 
 if __name__ == "__main__":
