@@ -9,9 +9,9 @@ efrenhask@gmail.com
 
 class Token:
 
-    def __init__(self):
-        self._type = str()
-        self._val = None
+    def __init__(self,token_type = str(), val = None):
+        self._type = token_type
+        self._val = val
         self._leftChild = None
         self._rightChild = None
 
@@ -40,7 +40,13 @@ class Token:
     def set_val(self,val):
         self._val = val
 
+    def get_val(self):
+        return self._val
+
     #set node's type: necessary when initializing a node object
     def set_type(self,val_type):
         self._type = val_type
+
+    def get_type(self) -> str:
+        return self._type
 

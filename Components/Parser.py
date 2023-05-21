@@ -41,14 +41,14 @@ class Parser:
                 initial = index+1
 
             # arithmetic operation handling
-            else if line[index] in self.arithmetic:
+            elif line[index] in self.arithmetic:
                 token = line[index]
                 if index+1 < length:
                     if line[index+1] in self.arithmetic:
                         index += 1
                         token += line[index]
-                new = Token.Token()
-                new.set_type("arithmetic")
+                new = Token.Token(token_type="arithmetic")
+                new.set_type()
                 new.set_val(token)
 
             else:
@@ -57,7 +57,7 @@ class Parser:
         return tokens
 
     def build_parse_tree(self,tokens:List[str]) -> Token.Token:
-        for token in tokens:
+        throw(UNIMPLIMENTED)
             
 
     def build_syntax_tree(self,root:Token.Token):
@@ -65,4 +65,3 @@ class Parser:
     
     def convert_from_tree(self,root:Token.Token):
         throw(UNIMPLIMENTED)
-        
