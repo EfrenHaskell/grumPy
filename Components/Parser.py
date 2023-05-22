@@ -29,14 +29,10 @@ class Parser:
             if line[index] in self.token_breaks or index == length-1:
                 if (initial - index) > 0:
                     new = Token.Token()
-                    new_token = line[initial:index]
+                    token = line[initial:index]
                     if token in self.special_tokens:
-                        new.set_type(token)
-                        if new_token in self.special_tokens:
-                            throw(mod(SYNTAXERROR," a special token must be followed by a non-special token"))
-                            return None
-                    new.set_val(new_token)
-                    token = new_token
+                        new.set_type("special")
+                    new.set_val(token)
                     tokens.append(new)
                 initial = index+1
 

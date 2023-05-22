@@ -1,10 +1,12 @@
 '''
-Basic HashTable Implimentation for string
+Basic HashTable Implimentation for nAryNode
 
 @author Efren Haskell
 efrenhask@gmail.com
 efrenhask@brandies.edu
 '''
+
+import TokenTree as Tree
 
 class HashTable:
 
@@ -12,13 +14,13 @@ class HashTable:
         if list_inp != None:
             for val in list_inp:
                 self.insert(val)
-        self._internal = [None]*size
+        self._internal:Tree.TokenTree = [None]*size
         self._capacity = size
         self._size = 0
 
     #currently impliments basic linear probe due to the expected small size of ElementTable
     #considering using a tree chained implimentation in the event that I add more elements
-    def insert(self,val:str):
+    def insert(self,val:Tree.TokenTree):
         index = self.hash(val)
         for i in range(self._capacity):
             if self._internal[index] == None:
@@ -33,7 +35,7 @@ class HashTable:
             self.rehash(temp)
 
     #basic method to delete specified val
-    def delete(self,val:str):
+    def delete(self,val:Tree.TokenTree):
         index = self.hash(val)
         for i in range(self._capacity):
             if self._internal[index] == val:
@@ -43,7 +45,7 @@ class HashTable:
             index += 1
 
     #basic method to check for a value in the hash table
-    def hasVal(self, val:str):
+    def hasVal(self, val:Tree.TokenTree):
         found = False
         index = self.hash(val)
         for i in range(self._capacity):
@@ -53,7 +55,8 @@ class HashTable:
         return False
 
     #basic hash function with ascii conversion
-    def hash(self,val:str):
+    def hash(self,val:Tree.TokenTree):
+        val = val.
         asciival = sum([ord(char) for char in val])
         return asciival % self._virtual_size
 
@@ -62,6 +65,7 @@ class HashTable:
         for val in vals:
             self.insert(val)
 
+    #tostring implimentation
     def __str__(self):
         str_val = ','.join(self._internal)
         return "[" + str_val + "]"
