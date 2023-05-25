@@ -1,5 +1,5 @@
 '''
-grumPy Token
+grumPy Tokens are singly linkedlist nodes
 
 @author Efren Haskell
 efrenhask@brandeis.edu
@@ -7,46 +7,49 @@ efrenhask@gmail.com
 4/13/2023
 '''
 
+from Error_Log import *
+
 class Token:
 
-    def __init__(self,token_type = str(), val = None):
-        self._type = token_type
+    def __init__(self,val = str(), token_type = str()):
         self._val = val
-        self._leftChild = None
-        self._rightChild = None
+        self._next = None
+        self._type = token_type
 
-    #compare type to value to make certain the two are compatible
-    #if not, throw error
+    #compare type and value
+    #throw error if they are incompatible
     def type_val_comp(self):
         throw(UNIMPLIMENTED)
+    
+    #set next node
+    def set_next(self,next_node):
+        self._next = next_node
 
-    #set left child of root node
-    def set_left(self,leftChild): 
-        self._leftChild = leftChild
+    #get next node
+    def get_next(self):
+        return self._next
 
-    #set right child of root node
-    def set_right(self,rightChild): 
-        self._rightChild = rightChild
+    #set value of node
+    def set_val(self,new_val):
+        self._val = new_val
 
-    #get left child
-    def get_left(self):
-        return self._leftChild
-
-    #get right child
-    def get_right(self):
-        return self._rightChild
-
-   #set node's value: necessary when initializing a node object
-    def set_val(self,val):
-        self._val = val
-
-    def get_val(self):
+    #get value of node   
+    def get_val(self) -> str:
         return self._val
 
-    #set node's type: necessary when initializing a node object
-    def set_type(self,val_type):
-        self._type = val_type
+    #set token type
+    def set_type(self,token_type):
+        self._type = token_type
 
+    #get token type
     def get_type(self) -> str:
         return self._type
 
+    #tests if the node has a next node
+    def has_next(self) -> bool:
+        if self._next == None:
+            return False
+        return True
+
+    def __str__(self) -> str:
+        return self._val

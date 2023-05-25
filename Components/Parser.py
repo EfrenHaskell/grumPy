@@ -10,6 +10,7 @@ efrenhask@gmail.com
 from typing import List
 import Token
 from Error_Log import *
+import nAryHeap
 
 class Parser:
 
@@ -18,24 +19,26 @@ class Parser:
         self.special_tokens:List[str] = []
         self.arithmetic:List[str] = ['=','+','-']
 
-    def tokenize(self,line:str) -> List[Token.Token]:
+    def tokenize(self,line:str) -> Token.Token:
         initial = 0
-        length = len(line)
-        tokens:List[Token.Token] = list()
-        token = ""
         index = 0
+        length = len(line)
+        token = ""
+        root = None
+        temp = None
         while index < length:
+            new = None
             # special token, variable and primitives handling
-            if line[index] in self.token_breaks or index == length-1:
-                if (initial - index) > 0:
+            if line[index] in self.token_breaks or index+1 == length:
+                if index+1 == length:
+                    index += 1
+                if (index - initial) > 0:
                     new = Token.Token()
                     token = line[initial:index]
                     if token in self.special_tokens:
                         new.set_type("special")
-                    new.set_val(token)
-                    tokens.append(new)
                 initial = index+1
-
+                
             # arithmetic operation handling
             elif line[index] in self.arithmetic:
                 token = line[index]
@@ -44,14 +47,29 @@ class Parser:
                         index += 1
                         token += line[index]
                 new = Token.Token(token_type="arithmetic")
-                new.set_type()
-                new.set_val(token)
+                initial = index + 1
 
+            #arithmetic variable handling
+            elif line[index+1] in self.arithmetic:
+                token = line[initial:index+1]
+                new = Token.Token()
+                initial = index
+                
             else:
                 token += line[index]
-            
-        return tokens
+            if new != None:
+                new.set_val(token)
+                if root == None:
+                    root = new
+                if temp != None:
+                    temp.set_next(new)
+                temp = new
+            index += 1
+        return root
 
+    def build_block_expression(self,tokens:List[Token.Token]) -> str:
+        
+    
     def build_parse_tree(self,tokens:List[str]) -> Token.Token:
         throw(UNIMPLIMENTED)
             
@@ -61,3 +79,4 @@ class Parser:
     
     def convert_from_tree(self,root:Token.Token):
         throw(UNIMPLIMENTED)
+
