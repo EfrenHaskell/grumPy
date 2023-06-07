@@ -6,7 +6,7 @@ efrenhask@gmail.com
 efrenhask@brandies.edu
 '''
 
-import TokenTree as Tree
+import Token as Tk
 
 class HashTable:
 
@@ -14,17 +14,17 @@ class HashTable:
         if list_inp != None:
             for val in list_inp:
                 self.insert(val)
-        self._internal:Tree.TokenTree = [None]*size
+        self._internal:(Tk.Token,Tk.Token) = [None]*size
         self._capacity = size
         self._size = 0
 
     #currently impliments basic linear probe due to the expected small size of ElementTable
     #considering using a tree chained implimentation in the event that I add more elements
-    def insert(self,val:Tree.TokenTree):
+    def insert(self, val:Tk.Token,tail:Tk.Token):
         index = self.hash(val)
         for i in range(self._capacity):
             if self._internal[index] == None:
-                self._internal[index] = val
+                self._internal[index] = (val,tail)
                 self._size += 1
                 break
             index += 1
@@ -35,30 +35,38 @@ class HashTable:
             self.rehash(temp)
 
     #basic method to delete specified val
-    def delete(self,val:Tree.TokenTree):
+    def delete(self,val:Tk.Token):
         index = self.hash(val)
         for i in range(self._capacity):
-            if self._internal[index] == val:
+            if self._internal[index][0] == val:
                 self._internal[index] = None
                 self._size -= 1
                 break
-            index += 1
+            index = (index + 1) % self._capacity
 
     #basic method to check for a value in the hash table
-    def hasVal(self, val:Tree.TokenTree):
-        found = False
+    def has_val(self, val:Tk.Token):
         index = self.hash(val)
         for i in range(self._capacity):
-            if self._internal[index] == val:
+            if self._internal[index] != None and self._internal[index][0].get_val() == val.get_val():
                 return True
-            index += 1
+            index = (index + 1) % self._capacity
         return False
 
+    def extend(self, root:Tk.Token,tail:Tk.Token):
+        index = self.hash(root)
+        for i in range(self._capacity):
+            val = self._internal[index]
+            if val != None and val[0].get_val() == root.get_val():
+                val[0].set_next(root.get_next())
+                self._internal[index] = (val[0],tail)
+            index = (index + 1) % self._capacity
+
     #basic hash function with ascii conversion
-    def hash(self,val:Tree.TokenTree):
-        val = val.
+    def hash(self,val:Tk.Token):
+        val = val.get_val()
         asciival = sum([ord(char) for char in val])
-        return asciival % self._virtual_size
+        return asciival % self._capacity
 
     #rehash method for growing hash table     
     def rehash(self,vals:list):
@@ -67,5 +75,21 @@ class HashTable:
 
     #tostring implimentation
     def __str__(self):
-        str_val = ','.join(self._internal)
-        return "[" + str_val + "]"
+        res = ""
+        for i in range(self._capacity):
+            char = self._internal[i]
+            if char != None:
+                if len(res) > 0:
+                    res += ","
+                root = char[0]
+                res += "["
+                while True:
+                    if root == None:
+                        break
+                    res += str(root)
+                    if root.get_next() != None:
+                        res += ","
+                    root = root.get_next()
+                    
+                res += "]"
+        return "[" + res + "]"
