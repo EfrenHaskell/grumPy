@@ -9,6 +9,9 @@ The end goal is to bootstrap the grumPy compiler
 grumGrum will ideally incorporate a more extensive group of packages and APIs for software development
 The lexer file will most likely be removed from the final project
 
+Developer Notes:
+https://docs.google.com/document/d/1CfRYHcdDE3Y9C23hLL-EISdsOW0gw1dbgqoUaMe3stU/edit?usp=sharing
+
 --
 Description:
     The grumPy Compiler is a simplified, somewhat nonsense compiler written in python.
